@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Casamento · Preta & Guilherme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F6F2E9; --beige: #DECBB1; --clay: #AE805C; --brown: #744B26;
+    --olive-dark: #52551D; --olive: #757836; --sage: #999C5E; --sage-light: #BABF8F; --gold: #B8973F;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--cream); color:var(--brown); font-family:'Cormorant Garamond',serif; font-size:16px; line-height:1.45; }
+  .wrap { max-width:1280px; margin:0 auto; padding:28px 20px 90px; }
+  header { text-align:center; margin-bottom:22px; }
+  .monogram { font-family:'Cinzel',serif; font-size:14px; letter-spacing:6px; color:var(--olive); margin-bottom:4px; }
+  h1 { font-family:'Cinzel',serif; font-weight:500; font-size:30px; color:var(--brown); margin:0 0 6px; letter-spacing:1px; }
+  .subtitle { color:var(--olive-dark); font-style:italic; font-size:16px; }
+  .aviso { color:var(--sage); font-size:13px; margin-top:6px; max-width:720px; margin-left:auto; margin-right:auto; }
+
+  .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center; margin:18px 0 22px; }
+  .btn { font-family:'Cinzel',serif; font-size:11.5px; letter-spacing:0.8px; text-transform:uppercase; border:1px solid var(--olive); background:#fff; color:var(--olive-dark); padding:9px 16px; border-radius:8px; cursor:pointer; }
+  .btn:hover { background:var(--beige); }
+  .btn.primary { background:var(--olive); color:var(--cream); border-color:var(--olive); }
+  .btn.primary:hover { background:var(--olive-dark); }
+  input[type=file] { display:none; }
+  .busca-box { display:flex; align-items:center; gap:6px; border:1px solid var(--beige); border-radius:8px; padding:6px 10px; background:#fff; }
+  .busca-box input { border:none; outline:none; font-family:'Cormorant Garamond',serif; font-size:15px; color:var(--brown); background:transparent; width:170px; }
+
+  nav.tabs { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:20px; }
+  nav.tabs button { font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--beige); background:#fff; color:var(--brown); padding:9px 16px; border-radius:999px; cursor:pointer; }
+  nav.tabs button.active { background:var(--brown); color:var(--cream); border-color:var(--brown); }
+
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:22px; }
+  .card { background:#fff; border:1px solid var(--beige); border-radius:10px; padding:14px 10px; text-align:center; }
+  .card .num { font-family:'Cinzel',serif; font-size:24px; color:var(--brown); display:block; }
+  .card .lbl { font-family:'Cinzel',serif; text-transform:uppercase; letter-spacing:1px; font-size:10.5px; color:var(--olive-dark); display:block; margin-top:4px; }
+  .card.destaque { background:var(--olive); }
+  .card.destaque .num, .card.destaque .lbl { color:var(--cream); }
+
+  .panel { background:#fff; border:1px solid var(--beige); border-radius:12px; padding:20px 22px; margin-bottom:18px; }
+  .panel h2 { font-family:'Cinzel',serif; text-transform:uppercase; letter-spacing:1.5px; font-size:12.5px; color:var(--olive-dark); margin:0 0 12px; border-bottom:1px solid var(--beige); padding-bottom:9px; }
+
+  .filtros { display:flex; flex-wrap:wrap; gap:16px; align-items:flex-end; margin-bottom:14px; }
+  .filtro-grupo { display:flex; flex-direction:column; gap:5px; }
+  .filtro-grupo label.titulo { font-family:'Cinzel',serif; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--olive-dark); }
+  .pill-row { display:flex; gap:5px; flex-wrap:wrap; }
+  .pill { font-family:'Cormorant Garamond',serif; font-size:14.5px; border:1px solid var(--beige); background:var(--cream); color:var(--brown); padding:5px 12px; border-radius:999px; cursor:pointer; user-select:none; }
+  .pill.active { background:var(--olive); color:var(--cream); border-color:var(--olive); }
+  select { font-family:'Cormorant Garamond',serif; font-size:14.5px; border:1px solid var(--beige); border-radius:6px; padding:5px 8px; background:#fff; color:var(--brown); }
+  .filtro-grupo select { min-width:190px; }
+  .chk-row { display:flex; gap:10px; flex-wrap:wrap; }
+  .chk-row label { display:flex; align-items:center; gap:4px; cursor:pointer; font-size:14px; }
+  .toggle-naoira { display:flex; align-items:center; gap:6px; font-size:14px; }
+
+  .secao-header { display:flex; justify-content:space-between; align-items:baseline; background:var(--beige); padding:8px 12px; border-radius:6px; margin:16px 0 6px; }
+  .secao-header span:first-child { font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.5px; color:var(--brown); text-transform:uppercase; }
+  .secao-header span:last-child { font-size:13px; color:var(--olive-dark); font-style:italic; }
+
+  .row-grid { display:grid; grid-template-columns: 1.7fr 1.1fr 1fr 1fr 1fr 1fr 30px; gap:8px; align-items:center; padding:6px 4px; border-bottom:1px solid #f0ebe0; }
+  .row-grid.row-header { font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.6px; text-transform:uppercase; color:var(--sage); border-bottom:2px solid var(--beige); padding-bottom:8px; }
+  .row-grid.row-conv { grid-template-columns: 1.6fr 0.8fr 1.4fr 1fr 1fr 30px; }
+  .row-grid.row-crianca { grid-template-columns: 1.6fr 0.7fr 1.1fr 0.9fr 0.9fr 0.9fr 30px; }
+  .row-grid .cell.nome { font-weight:600; }
+  .row-grid select.edit-select { width:100%; font-size:14px; padding:4px 6px; }
+  .row-grid .muted { color:#bbb; font-style:italic; font-size:13px; }
+  .btn-remove { border:none; background:transparent; color:var(--clay); font-size:18px; cursor:pointer; line-height:1; }
+  .btn-remove:hover { color:#a33; }
+  .row-grid.oculto-naoira select.sel-status { background:#f6e8e8; }
+
+  /* Linha compacta (Nome + Status + botao Convite) usada em Gui/Preta/Padrinhos */
+  .linha-pessoa { border-bottom:1px solid #f0ebe0; }
+  .row-compact { display:grid; grid-template-columns: 1.8fr 1fr 112px 28px; gap:8px; align-items:center; padding:7px 4px; }
+  .row-compact.row-header { font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.6px; text-transform:uppercase; color:var(--sage); border-bottom:2px solid var(--beige); padding-bottom:8px; }
+  .row-compact .cell.nome { font-weight:600; }
+  .row-compact select.edit-select { width:100%; font-size:14px; padding:4px 6px; border-radius:6px; }
+  select.sel-status.val-Confirmado { background:#e4ecd4; }
+  select.sel-status.val-Alta-probabilidade { background:#e9e3c9; }
+  select.sel-status.val-Talvez { background:var(--beige); }
+  select.sel-status.val-Baixa-probabilidade { background:#f2e3d4; }
+  select.sel-status.val-Nao-ira { background:#ecd9d9; }
+  .btn-convite { font-family:'Cormorant Garamond',serif; font-size:13px; border:1px solid var(--beige); background:#fff; color:var(--brown); padding:5px 10px; border-radius:6px; cursor:pointer; white-space:nowrap; width:100%; }
+  .btn-convite.tem-dados { border-color:var(--olive); color:var(--olive-dark); font-weight:600; background:#f4f2e6; }
+  .row-detail { display:none; flex-wrap:wrap; gap:18px; background:var(--cream); padding:12px 16px; margin:0 0 6px; border-radius:8px; border:1px solid var(--beige); }
+  .row-detail.aberto { display:flex; }
+  .detalhe-campo { min-width:150px; }
+  .detalhe-campo label { font-family:'Cinzel',serif; font-size:9.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--olive-dark); display:block; margin-bottom:4px; }
+  .detalhe-campo select { width:100%; }
+  .detalhe-campo .muted { color:#aaa; font-style:italic; font-size:12.5px; }
+
+  .add-form { display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; margin-top:18px; padding-top:14px; border-top:1px dashed var(--beige); }
+  .add-form input[type=text] { font-family:'Cormorant Garamond',serif; font-size:15px; border:1px solid var(--beige); border-radius:6px; padding:6px 9px; }
+  .add-form label { font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.6px; text-transform:uppercase; color:var(--olive-dark); display:block; margin-bottom:3px; }
+
+  table.simples { width:100%; border-collapse:collapse; }
+  table.simples thead th { font-family:'Cinzel',serif; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--olive-dark); text-align:left; padding:8px 8px; border-bottom:2px solid var(--beige); position:sticky; top:0; background:#fff; }
+  table.simples tbody td { padding:8px 8px; border-bottom:1px solid #f0ebe0; font-size:15px; }
+  table.simples tbody tr:hover { background:var(--cream); }
+  .badge { display:inline-block; font-size:12px; padding:3px 9px; border-radius:999px; font-weight:600; }
+  .badge.Confirmado { background:#e4ecd4; color:var(--olive-dark); }
+  .badge.Alta-probabilidade { background:#e9e3c9; color:var(--brown); }
+  .badge.Talvez { background:var(--beige); color:var(--brown); }
+  .badge.Baixa-probabilidade { background:#f2e3d4; color:var(--clay); }
+  .badge.Nao-ira { background:#ecd9d9; color:#8a4a4a; }
+  .badge.vazio { background:#eee; color:#999; }
+
+  .table-wrap { max-height:600px; overflow-y:auto; border-radius:8px; }
+  .contador { font-size:13.5px; color:var(--sage); margin-top:10px; font-style:italic; }
+  footer { text-align:center; color:var(--sage); font-size:13.5px; font-style:italic; margin-top:26px; padding-top:16px; border-top:1px solid var(--beige); }
+
+  input.nome-input { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:16px; color:var(--brown); border:1px solid transparent; background:transparent; border-radius:6px; padding:4px 6px; width:100%; }
+  input.nome-input:hover { border-color:var(--beige); }
+  input.nome-input:focus { border-color:var(--olive); background:#fff; outline:none; }
+  input.nota-input { font-family:'Cormorant Garamond',serif; font-size:14px; border:1px solid var(--beige); border-radius:6px; padding:5px 8px; width:100%; }
+
+  .btn-add-topo { font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.8px; text-transform:uppercase; border:1px solid var(--olive); background:var(--olive); color:var(--cream); padding:10px 18px; border-radius:8px; cursor:pointer; }
+  .btn-add-topo:hover { background:var(--olive-dark); }
+
+  .modal-overlay { position:fixed; inset:0; background:rgba(82,85,29,0.35); display:none; align-items:center; justify-content:center; z-index:50; padding:20px; }
+  .modal-overlay.aberto { display:flex; }
+  .modal-card { background:var(--cream); border-radius:12px; padding:26px 28px; max-width:480px; width:100%; border:1px solid var(--beige); }
+  .modal-card h3 { font-family:'Cinzel',serif; text-transform:uppercase; letter-spacing:1px; font-size:15px; color:var(--brown); margin:0 0 16px; }
+  .modal-campo { margin-bottom:14px; }
+  .modal-campo label.titulo { font-family:'Cinzel',serif; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--olive-dark); display:block; margin-bottom:5px; }
+  .modal-campo input[type=text] { width:100%; font-family:'Cormorant Garamond',serif; font-size:15px; border:1px solid var(--beige); border-radius:6px; padding:8px 10px; }
+  .modal-campo select { width:100%; }
+  .modal-acoes { display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
+
+  @media (max-width:900px) {
+    .row-grid { grid-template-columns: 1fr; }
+    .row-grid.row-header { display:none; }
+    .row-grid .cell { padding:2px 0; }
+    .row-compact { grid-template-columns: 1.6fr 1fr 100px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="monogram">P + G</div>
+    <h1>Lista de Casamento</h1>
+    <div class="subtitle">Preta &amp; Guilherme · 23.01.2027 · São Miguel dos Milagres, Alagoas</div>
+    <div class="aviso">Retrato editável gerado em 15/08/2026 21:09 UTC. As edições feitas aqui existem só nesta aba do navegador enquanto ela estiver aberta: use "Exportar dados" pra salvar um arquivo com o que mudou, e "Importar dados" pra continuar de onde parou (ou pra carregar o que a Preta editou). Isso não sincroniza sozinho entre os dois aparelhos.</div>
+  </header>
+
+  <div class="toolbar">
+    <button class="btn-add-topo" id="btn-abrir-modal-adicionar">+ Adicionar convidado</button>
+    <button class="btn primary" id="btn-exportar">Exportar dados (.json)</button>
+    <button class="btn" id="btn-importar-trigger">Importar dados (.json)</button>
+    <input type="file" id="input-importar" accept="application/json">
+    <div class="busca-box">
+      <span>&#128269;</span>
+      <input type="text" id="busca" placeholder="Buscar nome...">
+    </div>
+    <label class="toggle-naoira"><input type="checkbox" id="mostrar-nao-ira"> mostrar quem está como Não irá</label>
+  </div>
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <div id="conteudo"></div>
+
+  <footer>
+    Fonte real dos dados: a planilha do Google Sheets, feita para os dois editarem juntos ao mesmo tempo. Este app é uma forma alternativa e visual de editar a mesma lista, mas não conversa automaticamente com a planilha.
+  </footer>
+
+</div>
+
+<div class="modal-overlay" id="modal-adicionar">
+  <div class="modal-card">
+    <h3>Adicionar convidado</h3>
+    <div class="modal-campo">
+      <label class="titulo">Nome</label>
+      <input type="text" id="modal-nome" placeholder="Nome da pessoa">
+    </div>
+    <div class="modal-campo">
+      <label class="titulo">Lado</label>
+      <div class="pill-row" id="modal-lado-pills"></div>
+    </div>
+    <div class="modal-campo">
+      <label class="titulo">Tipo</label>
+      <div class="pill-row" id="modal-tipo-pills"></div>
+    </div>
+    <div class="modal-campo" id="modal-secao-wrap">
+      <label class="titulo">Seção</label>
+      <select id="modal-secao"></select>
+      <div id="modal-nova-secao-wrap" style="display:none; margin-top:8px;">
+        <input type="text" id="modal-nova-secao" placeholder="Nome da nova seção">
+      </div>
+    </div>
+    <div class="modal-acoes">
+      <button class="btn" id="btn-cancelar-adicionar">Cancelar</button>
+      <button class="btn primary" id="btn-confirmar-adicionar">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let DADOS = [{"id": "p1", "nome": "Marcos Sawczyn", "lado": "Gui", "secao": "Família Sawczyn", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p2", "nome": "Tassiane", "lado": "Gui", "secao": "Família Sawczyn", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p3", "nome": "Bernardo", "lado": "Gui", "secao": "Família Sawczyn", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p4", "nome": "Jeferson Sawczyn", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p5", "nome": "Márcia", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p6", "nome": "Vinicius", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p7", "nome": "Ana Julia", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p8", "nome": "Maria Fernanda", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p9", "nome": "Marly", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p10", "nome": "Marly + 1", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p11", "nome": "Bruna", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p12", "nome": "Leonardo", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p13", "nome": "luiza bru", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p14", "nome": "Luccas", "lado": "Gui", "secao": "Família Sawczyn", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p15", "nome": "Vó Marialba", "lado": "Gui", "secao": "Família Moraes", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p16", "nome": "Piu piu", "lado": "Gui", "secao": "Família Moraes", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p17", "nome": "Tia Fran", "lado": "Gui", "secao": "Família Moraes", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p18", "nome": "Robson", "lado": "Gui", "secao": "Família Moraes", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p19", "nome": "Fabio", "lado": "Gui", "secao": "Família Moraes", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p20", "nome": "Maria Clara", "lado": "Gui", "secao": "Família Moraes", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p21", "nome": "Negraozinho", "lado": "Gui", "secao": "Outros (seção sem nome no excel original - confirmar)", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p22", "nome": "Thay", "lado": "Gui", "secao": "Outros (seção sem nome no excel original - confirmar)", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p23", "nome": "Sérgio", "lado": "Gui", "secao": "Outros (seção sem nome no excel original - confirmar)", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p24", "nome": "Rodrigo Instrumento", "lado": "Gui", "secao": "Outros (seção sem nome no excel original - confirmar)", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p25", "nome": "Pedro Sfeir", "lado": "Gui", "secao": "Outros (seção sem nome no excel original - confirmar)", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p26", "nome": "Felipe Fogliatto", "lado": "Gui", "secao": "Núcleo Fer Fogliatto", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p27", "nome": "Nil Fogliatto", "lado": "Gui", "secao": "Núcleo Fer Fogliatto", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p28", "nome": "Paulo Fogliatto", "lado": "Gui", "secao": "Núcleo Fer Fogliatto", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p29", "nome": "Wem", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p30", "nome": "Frango", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p31", "nome": "Frango + 1", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p32", "nome": "Fer Tião", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p33", "nome": "Mayara", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p34", "nome": "Mauro Tavora", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p35", "nome": "Suellen", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p36", "nome": "Mayron", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p37", "nome": "Rafa Mamao", "lado": "Gui", "secao": "Núcleo Curitiba", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p38", "nome": "Barbara", "lado": "Gui", "secao": "Núcleo Fer", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p39", "nome": "Rafael", "lado": "Gui", "secao": "Núcleo Fer", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p40", "nome": "Jhonathan", "lado": "Gui", "secao": "Núcleo Fer", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p41", "nome": "Felipe", "lado": "Gui", "secao": "Núcleo Fer", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p42", "nome": "Diego Espígão", "lado": "Gui", "secao": "Núcleo Fer", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p43", "nome": "Mari", "lado": "Gui", "secao": "Núcleo Fer", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p44", "nome": "Guga", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p45", "nome": "Pati", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p46", "nome": "Pri", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p47", "nome": "Joey", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p48", "nome": "Castro", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p49", "nome": "Luana", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p50", "nome": "Alan", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p51", "nome": "Miguel", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p52", "nome": "Euca", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p53", "nome": "Aline", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p54", "nome": "Thais", "lado": "Gui", "secao": "Núcleo Judeus", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p55", "nome": "Danila", "lado": "Gui", "secao": "Núcleo SP", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p56", "nome": "Luiza Patusco", "lado": "Gui", "secao": "Núcleo SP", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p57", "nome": "Paula", "lado": "Gui", "secao": "Núcleo SP", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p58", "nome": "Bruno Matsubara", "lado": "Gui", "secao": "Núcleo SP", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p59", "nome": "Bruno Pais", "lado": "Gui", "secao": "Núcleo SP", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p60", "nome": "Karine", "lado": "Gui", "secao": "Núcleo SP", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p61", "nome": "Rafael Homor", "lado": "Gui", "secao": "Núcleo SP", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p62", "nome": "Mariana", "lado": "Gui", "secao": "Núcleo SP", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p63", "nome": "Danilo", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p64", "nome": "Marta", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p65", "nome": "Mathias", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p66", "nome": "Débora", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p67", "nome": "Stenio", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p68", "nome": "Barbara", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p69", "nome": "Erick Seguro", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p70", "nome": "Ana Paula", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p71", "nome": "Giba", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p72", "nome": "Ana", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p73", "nome": "Bruno Toninello", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p74", "nome": "Rosane", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p75", "nome": "Gustavo Ribas", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p76", "nome": "Bianca", "lado": "Gui", "secao": "Núcleo UFPR", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p77", "nome": "Palmito", "lado": "Gui", "secao": "Núcleo Bota", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p78", "nome": "Isa", "lado": "Gui", "secao": "Núcleo Bota", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p79", "nome": "Mantovani", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p80", "nome": "Luanny", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p81", "nome": "Galvão", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p82", "nome": "Barbara", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p83", "nome": "Bendlin", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p84", "nome": "Arthur Voos", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p85", "nome": "Bacca", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p86", "nome": "Anna", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p87", "nome": "Shadow", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p88", "nome": "Vitoria", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p89", "nome": "Ceccon", "lado": "Gui", "secao": "Núcleo Bota", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p90", "nome": "Giovanni", "lado": "Gui", "secao": "Núcleo Prevent", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p91", "nome": "Giovanni + 1", "lado": "Gui", "secao": "Núcleo Prevent", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p92", "nome": "Luis", "lado": "Gui", "secao": "Núcleo Prevent", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p93", "nome": "Bruna", "lado": "Gui", "secao": "Núcleo Prevent", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p94", "nome": "Eduardo", "lado": "Gui", "secao": "Núcleo Prevent", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p95", "nome": "Eduardo + 1", "lado": "Gui", "secao": "Núcleo Prevent", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p96", "nome": "Walter", "lado": "Gui", "secao": "Núcleo USA", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p97", "nome": "monika", "lado": "Gui", "secao": "Núcleo USA", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p98", "nome": "Sherine", "lado": "Gui", "secao": "Núcleo USA", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p99", "nome": "Arthur", "lado": "Gui", "secao": "Núcleo USA", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p100", "nome": "Costin", "lado": "Gui", "secao": "Núcleo USA", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p101", "nome": "Fer Fogliatto", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p102", "nome": "Joana", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p103", "nome": "Ygor", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p104", "nome": "Gab Waldraff", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p105", "nome": "Mamão", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p106", "nome": "França", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p107", "nome": "Laís", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p108", "nome": "Alfenas", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p109", "nome": "Renata", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p110", "nome": "Leon", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p111", "nome": "Mari", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p112", "nome": "Thais", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p113", "nome": "Malfa", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p114", "nome": "Raul", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p115", "nome": "Day", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p116", "nome": "Fer", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p117", "nome": "Sabrina", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p118", "nome": "Victor", "lado": "Gui", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p119", "nome": "Ilineu Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p120", "nome": "Eliane Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Ilineu Possatto.", "encontro_padrinhos": ""}, {"id": "p121", "nome": "Bady Possatto", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p122", "nome": "Cristiano Ontivero", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Bady Possatto.", "encontro_padrinhos": ""}, {"id": "p123", "nome": "Cida Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p124", "nome": "Iliani Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p125", "nome": "Fernando Moreira", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Iliani Possatto.", "encontro_padrinhos": ""}, {"id": "p126", "nome": "Yasmin Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p127", "nome": "João Pedro Pires", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Yasmin Possatto.", "encontro_padrinhos": ""}, {"id": "p128", "nome": "Ivandro Possatto", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p129", "nome": "Elenice Possatto", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Ivandro Possatto.", "encontro_padrinhos": ""}, {"id": "p130", "nome": "Mayara Possatto", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p131", "nome": "Richard", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Mayara Possatto.", "encontro_padrinhos": ""}, {"id": "p132", "nome": "Erondina", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p133", "nome": "Fatima", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p134", "nome": "Celso", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Fatima.", "encontro_padrinhos": ""}, {"id": "p135", "nome": "Thais Borsato", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p136", "nome": "João Victor Borsato", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p137", "nome": "Douglas Silva", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "3", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p138", "nome": "Bruna", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Douglas Silva.", "encontro_padrinhos": ""}, {"id": "p139", "nome": "Taiani Wolff", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p140", "nome": "Rodrigo Wolff", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Taiani Wolff.", "encontro_padrinhos": ""}, {"id": "p141", "nome": "Andressa Dorigon", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p142", "nome": "Thomas Dorigon", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Andressa Dorigon.", "encontro_padrinhos": ""}, {"id": "p143", "nome": "Valentina Rozo", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p144", "nome": "Adriana de Gues", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p145", "nome": "Nico de Gues", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Adriana de Gues.", "encontro_padrinhos": ""}, {"id": "p146", "nome": "Max de Gues", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p147", "nome": "Luis Augusto de Sousa", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p148", "nome": "Valeira", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Luis Augusto de Sousa.", "encontro_padrinhos": ""}, {"id": "p149", "nome": "Luis Eduardo de Sousa", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "2", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p150", "nome": "Pamela", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Luis Eduardo de Sousa.", "encontro_padrinhos": ""}, {"id": "p151", "nome": "Isabelly de Sousa", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "3", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p152", "nome": "Luis Gustavo de Sousa", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p153", "nome": "Homar Negrão", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p154", "nome": "Alex", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Homar Negrão.", "encontro_padrinhos": ""}, {"id": "p155", "nome": "Roseneia Macan", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p156", "nome": "Hans Prix", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p157", "nome": "Sonia Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Hans Prix.", "encontro_padrinhos": ""}, {"id": "p158", "nome": "Maicon Pot", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p159", "nome": "Alex Rosa", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p160", "nome": "Carol", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Alex Rosa.", "encontro_padrinhos": ""}, {"id": "p161", "nome": "Guilherme Rosa", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p162", "nome": "Fran", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Guilherme Rosa.", "encontro_padrinhos": ""}, {"id": "p163", "nome": "Eduard Rosa", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p164", "nome": "Bruna Ulrich", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "2", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p165", "nome": "Augusto", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Bruna Ulrich.", "encontro_padrinhos": ""}, {"id": "p166", "nome": "Carla", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "3", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p167", "nome": "Patrick", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Carla.", "encontro_padrinhos": ""}, {"id": "p168", "nome": "Bruno Moraes", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p169", "nome": "Yasmin Musa", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Bruno Moraes.", "encontro_padrinhos": ""}, {"id": "p170", "nome": "Eduardo Sampaio", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Obs. da planilha original: 14 ANOS FILHA", "encontro_padrinhos": ""}, {"id": "p171", "nome": "Luiza", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Eduardo Sampaio.", "encontro_padrinhos": ""}, {"id": "p172", "nome": "Aline Segabinaze", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "2", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p173", "nome": "Thiago", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Aline Segabinaze.", "encontro_padrinhos": ""}, {"id": "p174", "nome": "Marcia Giglio", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Obs. da planilha original: 14 ANOS FILHA", "encontro_padrinhos": ""}, {"id": "p175", "nome": "Junior", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Marcia Giglio.", "encontro_padrinhos": ""}, {"id": "p176", "nome": "Renata Lobo", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p177", "nome": "Farley", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Renata Lobo.", "encontro_padrinhos": ""}, {"id": "p178", "nome": "Gabriela Kluppel", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p179", "nome": "Guilherme Kluppel", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Gabriela Kluppel.", "encontro_padrinhos": ""}, {"id": "p180", "nome": "Tábata Soares", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p181", "nome": "Angelita", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p182", "nome": "Camila Zarpelon", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p183", "nome": "Monalisa", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p184", "nome": "Michel", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Monalisa.", "encontro_padrinhos": ""}, {"id": "p185", "nome": "Luize Delponte", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p186", "nome": "Luiciano", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Luize Delponte.", "encontro_padrinhos": ""}, {"id": "p187", "nome": "Gian Kochinski", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p188", "nome": "Taliane Kluppel", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p189", "nome": "João Paulo Kluppel", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Taliane Kluppel.", "encontro_padrinhos": ""}, {"id": "p190", "nome": "Alexandra (doti)", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p191", "nome": "Breno", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p192", "nome": "Esposa de Breno", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Breno.", "encontro_padrinhos": ""}, {"id": "p193", "nome": "Edmur", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p194", "nome": "Eloisa", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Edmur.", "encontro_padrinhos": ""}, {"id": "p195", "nome": "Vitotia", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p196", "nome": "Priscila", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p197", "nome": "Mariana", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p198", "nome": "Xandi", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Mariana.", "encontro_padrinhos": ""}, {"id": "p199", "nome": "Paula", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "2", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p200", "nome": "Bebeto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Paula.", "encontro_padrinhos": ""}, {"id": "p201", "nome": "Carol", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p202", "nome": "Thiago", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Carol.", "encontro_padrinhos": ""}, {"id": "p203", "nome": "Thais", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p204", "nome": "Guilhermo", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Thais.", "encontro_padrinhos": ""}, {"id": "p205", "nome": "Malu", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "3", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p206", "nome": "Marido de Malu", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Malu.", "encontro_padrinhos": ""}, {"id": "p207", "nome": "Nina", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p208", "nome": "Arthur", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p209", "nome": "Marina", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Arthur.", "encontro_padrinhos": ""}, {"id": "p210", "nome": "Pedro Jacomel", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p211", "nome": "Rene", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p212", "nome": "Bruno Wolff", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p213", "nome": "Luiza Wolff", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Bruno Wolff.", "encontro_padrinhos": ""}, {"id": "p214", "nome": "Carolina", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p215", "nome": "Rafael", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Carolina.", "encontro_padrinhos": ""}, {"id": "p216", "nome": "Karina", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p217", "nome": "Giovana Rentz", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p218", "nome": "Joecir", "lado": "Preta", "secao": "Padrinhos", "status": "Confirmado", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "Enviado", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Giovana Rentez.", "encontro_padrinhos": ""}, {"id": "p219", "nome": "Jairo", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p220", "nome": "Nane", "lado": "Preta", "secao": "", "status": "Talvez", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Jairo.", "encontro_padrinhos": ""}, {"id": "p221", "nome": "Nice", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "Sim", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p222", "nome": "Marcio", "lado": "Preta", "secao": "", "status": "Não irá", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Nice.", "encontro_padrinhos": ""}, {"id": "p223", "nome": "Fernando Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "2", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p224", "nome": "Camila", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Fernando Possatto.", "encontro_padrinhos": ""}, {"id": "p225", "nome": "Felipe Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p226", "nome": "Debora", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Felipe Possatto.", "encontro_padrinhos": ""}, {"id": "p227", "nome": "Ferndandinho Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p228", "nome": "Mila", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Ferndandinho Possatto.", "encontro_padrinhos": ""}, {"id": "p229", "nome": "Cunha", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p230", "nome": "Vaz", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Cunha.", "encontro_padrinhos": ""}, {"id": "p231", "nome": "Nards", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p232", "nome": "Esposa de Nards", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Nards.", "encontro_padrinhos": ""}, {"id": "p233", "nome": "Pm", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p234", "nome": "Dvd", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p235", "nome": "Esposa de Dvd", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Dvd.", "encontro_padrinhos": ""}, {"id": "p236", "nome": "Mariana Ribeirão", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p237", "nome": "Roberta Salvador", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p238", "nome": "Marido de Roberta Salvador", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Roberta Salvador.", "encontro_padrinhos": ""}, {"id": "p239", "nome": "Robson", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p240", "nome": "Ale Mexico", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "3", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p241", "nome": "Marido de Ale Mexico", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Ale Mexico.", "encontro_padrinhos": ""}, {"id": "p242", "nome": "Luana Rogenski", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "2", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p243", "nome": "Marido de Luana Rogenski", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Luana Rogenski.", "encontro_padrinhos": ""}, {"id": "p244", "nome": "Milena", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p245", "nome": "Marido de Milena", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Milena.", "encontro_padrinhos": ""}, {"id": "p246", "nome": "Rafa", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p247", "nome": "Marido de Rafa", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Rafa.", "encontro_padrinhos": ""}, {"id": "p248", "nome": "Adyb", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p249", "nome": "Louise", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Sim", "criancas_bebes": "", "criancas_1a7": "1", "nota": "Faixa etária das crianças ainda não especificada (assumido em '1 a 7 anos' provisoriamente - conferir).", "encontro_padrinhos": ""}, {"id": "p250", "nome": "Marido de Louise", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Louise.", "encontro_padrinhos": ""}, {"id": "p251", "nome": "Livia", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}, {"id": "p252", "nome": "Carlos", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "Convite físico associado a Livia.", "encontro_padrinhos": ""}, {"id": "p253", "nome": "Ivo Possatto", "lado": "Preta", "secao": "", "status": "Confirmado", "convite_fisico": "Não", "status_fisico": "", "status_virtual": "", "tem_criancas": "Não", "criancas_bebes": "", "criancas_1a7": "", "nota": "", "encontro_padrinhos": ""}];
+const PESOS = {"Confirmado": 1.0, "Alta probabilidade": 0.75, "Talvez": 0.5, "Baixa probabilidade": 0.25, "Não irá": 0.0, "": null};
+const STATUS_ORDEM = ["Confirmado", "Alta probabilidade", "Talvez", "Baixa probabilidade", "Não irá"];
+const SIMNAO = ["Sim", "Não"];
+const ENVIO = ["Enviado", "Pendente"];
+const FAIXA_CRIANCAS_OPCOES = ["1", "2", "3"];
+const TABS = [
+  { id: "resumo", label: "Resumo" },
+  { id: "gui", label: "Gui" },
+  { id: "preta", label: "Preta" },
+  { id: "padrinhos", label: "Padrinhos" },
+  { id: "criancas", label: "Crianças" },
+  { id: "convite-fisico", label: "Convite Físico" },
+  { id: "convite-virtual", label: "Convite Virtual" },
+  { id: "lista", label: "Lista Simples" },
+];
+
+let abaAtual = "resumo";
+let filtroSecao = "Todas";
+let filtroStatus = new Set(STATUS_ORDEM);
+let filtroLado = "Todos";
+let filtroEnvio = "Todos";
+let filtroResumoLado = "Todos";
+let mostrarNaoIra = false;
+let buscaTexto = "";
+let proximoId = DADOS.length + 1;
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function slug(s) {
+  return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-").replace(/[^A-Za-z0-9-]/g, "");
+}
+function pesoDe(status) {
+  const p = PESOS[status];
+  return typeof p === "number" ? p : 0;
+}
+
+function passaFiltrosBase(r) {
+  if (!mostrarNaoIra && r.status === "Não irá") return false;
+  if (r.status && !filtroStatus.has(r.status)) return false;
+  if (buscaTexto && !r.nome.toLowerCase().includes(buscaTexto.toLowerCase())) return false;
+  return true;
+}
+
+function selectHTML(id, field, value, options, cls, placeholder) {
+  placeholder = placeholder === undefined ? "-" : placeholder;
+  let html = `<select data-id="${id}" data-field="${field}" class="edit-select ${cls||''}">`;
+  html += `<option value="">${escapeHtml(placeholder)}</option>`;
+  options.forEach(o => {
+    html += `<option value="${o}" ${o === value ? "selected" : ""}>${escapeHtml(o)}</option>`;
+  });
+  html += `</select>`;
+  return html;
+}
+
+let linhasExpandidas = new Set();
+
+function criancasDe(r) {
+  if (r.tem_criancas !== "Sim") return 0;
+  return (parseInt(r.criancas_bebes, 10) || 0) + (parseInt(r.criancas_1a7, 10) || 0);
+}
+
+function renderRowCompleto(r, opts) {
+  opts = opts || {};
+  const statusCls = "val-" + (r.status ? slug(r.status) : "");
+  const expandido = linhasExpandidas.has(r.id);
+  const temInfo = !!(r.convite_fisico || r.status_virtual || r.nota || r.tem_criancas || r.encontro_padrinhos);
+  const ehPadrinho = r.secao === "Padrinhos";
+  const campoCriancas = `<div class="detalhe-campo"><label>Tem crianças</label>${selectHTML(r.id, "tem_criancas", r.tem_criancas, SIMNAO, "", "(a definir)")}</div>` +
+    (r.tem_criancas === "Sim" ? `<div class="detalhe-campo"><label>0-12 meses</label>${selectHTML(r.id, "criancas_bebes", r.criancas_bebes, FAIXA_CRIANCAS_OPCOES, "", "0")}</div><div class="detalhe-campo"><label>1 a 7 anos</label>${selectHTML(r.id, "criancas_1a7", r.criancas_1a7, FAIXA_CRIANCAS_OPCOES, "", "0")}</div>` : "");
+  const campoEncontro = ehPadrinho ? `<div class="detalhe-campo"><label>Encontro de padrinhos</label>${selectHTML(r.id, "encontro_padrinhos", r.encontro_padrinhos, SIMNAO, "", "(a definir)")}</div>` : "";
+  const detalhe = `<div class="row-detail ${expandido ? 'aberto' : ''}" data-detail-id="${r.id}">
+      <div class="detalhe-campo"><label>Convite físico</label>${selectHTML(r.id, "convite_fisico", r.convite_fisico, SIMNAO, "", "(a definir)")}</div>
+      <div class="detalhe-campo"><label>Status físico</label>${r.convite_fisico === "Sim" ? selectHTML(r.id, "status_fisico", r.status_fisico, ENVIO, "", "(a definir)") : '<span class="muted">- marque Convite físico = Sim primeiro</span>'}</div>
+      <div class="detalhe-campo"><label>Status virtual</label>${selectHTML(r.id, "status_virtual", r.status_virtual, ENVIO, "", "(a definir)")}</div>
+      ${campoCriancas}
+      ${campoEncontro}
+      <div class="detalhe-campo" style="flex:1 1 220px;"><label>Nota</label><input type="text" class="nota-input" data-id="${r.id}" data-field="nota" value="${escapeHtml(r.nota || '')}" placeholder="ex.: associado ao convite de..."></div>
+    </div>`;
+  return `<div class="linha-pessoa" data-row-id="${r.id}">
+    <div class="row-compact">
+      <div class="cell nome"><input type="text" class="nome-input" data-id="${r.id}" data-field="nome" value="${escapeHtml(r.nome)}"></div>
+      <div class="cell">${selectHTML(r.id, "status", r.status, STATUS_ORDEM, "sel-status " + statusCls, "(definir)")}</div>
+      <div class="cell"><button class="btn-convite ${temInfo ? 'tem-dados' : ''}" data-toggle-convite="${r.id}">Mais ${expandido ? "&#9652;" : "&#9662;"}</button></div>
+      <div class="cell"><button class="btn-remove" data-remove-id="${r.id}" title="Remover">&times;</button></div>
+    </div>
+    ${detalhe}
+  </div>`;
+}
+
+const HEADER_COMPLETO = `<div class="row-compact row-header">
+  <div class="cell">Nome</div><div class="cell">Status</div><div class="cell">Detalhes</div><div class="cell"></div>
+</div>`;
+
+function secoesDoLado(lado) {
+  return Array.from(new Set(DADOS.filter(d => d.lado === lado && d.secao !== "Padrinhos").map(d => d.secao))).sort((a, b) => a.localeCompare(b, "pt-BR"));
+}
+
+// ---------------------------------------------------------------------
+// RESUMO
+// ---------------------------------------------------------------------
+function renderResumo() {
+  function contarStatus(lista, status) { return lista.filter(d => d.status === status).length; }
+  function pesoLista(lista) { return lista.reduce((s, d) => s + pesoDe(d.status), 0); }
+
+  const escopo = filtroResumoLado === "Todos" ? DADOS : DADOS.filter(d => d.lado === filtroResumoLado);
+
+  const metricas = [
+    ["Total de pessoas (todas)", l => l.length],
+    ["Confirmado", l => contarStatus(l, "Confirmado")],
+    ["Alta probabilidade", l => contarStatus(l, "Alta probabilidade")],
+    ["Talvez", l => contarStatus(l, "Talvez")],
+    ["Baixa probabilidade", l => contarStatus(l, "Baixa probabilidade")],
+    ["Não irá (oculto nas listas)", l => contarStatus(l, "Não irá")],
+    ["Visível nas listas", l => l.length - contarStatus(l, "Não irá")],
+    ["Convidados esperados (ponderado)", l => pesoLista(l).toFixed(1)],
+    ["Total de crianças", l => l.reduce((s, d) => s + criancasDe(d), 0)],
+    ["Convite físico enviado", l => l.filter(d => d.convite_fisico === "Sim" && d.status_fisico === "Enviado").length],
+    ["Convite físico pendente", l => l.filter(d => d.convite_fisico === "Sim" && d.status_fisico !== "Enviado").length],
+    ["Convite virtual enviado", l => l.filter(d => d.status_virtual === "Enviado").length],
+    ["Convite virtual pendente", l => l.filter(d => d.status_virtual === "Pendente").length],
+  ];
+
+  let colunas;
+  if (filtroResumoLado === "Todos") {
+    colunas = [
+      { label: "Gui", lista: escopo.filter(d => d.lado === "Gui" && d.secao !== "Padrinhos") },
+      { label: "Preta", lista: escopo.filter(d => d.lado === "Preta" && d.secao !== "Padrinhos") },
+      { label: "Padrinhos", lista: escopo.filter(d => d.secao === "Padrinhos") },
+    ];
+  } else {
+    colunas = [
+      { label: "Convidados", lista: escopo.filter(d => d.secao !== "Padrinhos") },
+      { label: "Padrinhos", lista: escopo.filter(d => d.secao === "Padrinhos") },
+    ];
+  }
+
+  let linhas = "";
+  metricas.forEach(([label, fn]) => {
+    const valores = colunas.map(c => fn(c.lista));
+    const total = valores.some(v => typeof v === "string")
+      ? valores.reduce((s, v) => s + parseFloat(v), 0).toFixed(1)
+      : valores.reduce((s, v) => s + v, 0);
+    linhas += `<tr><td>${label}</td>${valores.map(v => `<td>${v}</td>`).join("")}<td><strong>${total}</strong></td></tr>`;
+  });
+
+  const cardsTop = [
+    { num: escopo.length, lbl: "Total" + (filtroResumoLado === "Todos" ? " geral" : " - " + filtroResumoLado) },
+    { num: contarStatus(escopo, "Confirmado"), lbl: "Confirmado" },
+    { num: contarStatus(escopo, "Talvez"), lbl: "Talvez" },
+    { num: pesoLista(escopo).toFixed(1), lbl: "Esperado (ponderado)", destaque: true },
+    { num: contarStatus(escopo, "Não irá"), lbl: "Não irá (oculto)" },
+    { num: escopo.reduce((s, d) => s + criancasDe(d), 0), lbl: "Crianças" },
+  ];
+
+  const pills = `<div class="panel"><h2>Ver</h2><div class="filtros"><div class="filtro-grupo"><div class="pill-row">${
+    ["Todos", "Gui", "Preta"].map(l => `<div class="pill ${filtroResumoLado === l ? 'active' : ''}" data-resumo-lado="${l}">${l}</div>`).join("")
+  }</div></div></div></div>`;
+
+  document.getElementById("conteudo").innerHTML = `
+    ${pills}
+    <div class="cards">${cardsTop.map(c => `<div class="card ${c.destaque ? 'destaque' : ''}"><span class="num">${c.num}</span><span class="lbl">${c.lbl}</span></div>`).join("")}</div>
+    <div class="panel">
+      <h2>Resumo por grupo</h2>
+      <div class="table-wrap">
+      <table class="simples">
+        <thead><tr><th>Métrica</th>${colunas.map(c => `<th>${c.label}</th>`).join("")}<th>Total</th></tr></thead>
+        <tbody>${linhas}</tbody>
+      </table>
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll(".pill[data-resumo-lado]").forEach(p => {
+    p.onclick = () => { filtroResumoLado = p.dataset.resumoLado; renderResumo(); };
+  });
+}
+
+// ---------------------------------------------------------------------
+// GUI / PRETA (agrupado por Seção)
+// ---------------------------------------------------------------------
+function renderFiltrosPadrao(opts) {
+  opts = opts || {};
+  const mostrarLado = !!opts.mostrarLado;
+  const mostrarSecao = opts.secoes !== undefined;
+  const mostrarEnvio = !!opts.mostrarEnvio;
+
+  let html = '<div class="panel"><h2>Filtros</h2><div class="filtros">';
+
+  if (mostrarLado) {
+    html += `<div class="filtro-grupo"><label class="titulo">Lado</label><div class="pill-row">`;
+    ["Todos", "Gui", "Preta"].forEach(l => {
+      html += `<div class="pill ${filtroLado === l ? 'active' : ''}" data-lado-pill="${l}">${l}</div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  if (mostrarSecao) {
+    html += `<div class="filtro-grupo"><label class="titulo">Seção</label><select id="sel-secao"><option value="Todas">Todas</option>`;
+    opts.secoes.forEach(s => { html += `<option value="${escapeHtml(s)}" ${filtroSecao === s ? "selected" : ""}>${escapeHtml(s)}</option>`; });
+    html += `</select></div>`;
+  }
+
+  html += `<div class="filtro-grupo"><label class="titulo">Status</label><div class="chk-row">`;
+  STATUS_ORDEM.forEach(s => {
+    html += `<label><input type="checkbox" class="chk-status" value="${s}" ${filtroStatus.has(s) ? "checked" : ""}> ${s}</label>`;
+  });
+  html += `</div></div>`;
+
+  if (mostrarEnvio) {
+    html += `<div class="filtro-grupo"><label class="titulo">Envio</label><select id="sel-envio">`;
+    ["Todos", "Pendente", "Enviado", "Nao", "Indefinido"].forEach(v => {
+      const rot = { Todos: "Todos", Pendente: "Pendente (marcado Sim)", Enviado: "Enviado", Nao: "Convite = Não", Indefinido: "Ainda não decidido" }[v];
+      html += `<option value="${v}" ${filtroEnvio === v ? "selected" : ""}>${rot}</option>`;
+    });
+    html += `</select></div>`;
+  }
+
+  html += `</div><div class="contador" id="contador"></div></div>`;
+  return html;
+}
+
+function ligarFiltrosPadrao(recalcular) {
+  document.querySelectorAll(".pill[data-lado-pill]").forEach(p => {
+    p.onclick = () => { filtroLado = p.dataset.ladoPill; filtroSecao = "Todas"; recalcular(); };
+  });
+  const selSecao = document.getElementById("sel-secao");
+  if (selSecao) selSecao.onchange = (e) => { filtroSecao = e.target.value; recalcular(); };
+  document.querySelectorAll(".chk-status").forEach(c => {
+    c.onchange = () => { if (c.checked) filtroStatus.add(c.value); else filtroStatus.delete(c.value); recalcular(); };
+  });
+  const selEnvio = document.getElementById("sel-envio");
+  if (selEnvio) selEnvio.onchange = (e) => { filtroEnvio = e.target.value; recalcular(); };
+}
+
+function renderLadoTab(lado) {
+  const usaSecoes = lado === "Gui";
+  const secoesTodas = usaSecoes ? secoesDoLado(lado) : [];
+  let html = renderFiltrosPadrao(usaSecoes ? { secoes: secoesTodas } : {});
+  html += '<div class="panel"><h2>Convidados - ' + lado + '</h2><div id="lista-agrupada"></div></div>';
+  document.getElementById("conteudo").innerHTML = html;
+  ligarFiltrosPadrao(() => renderLadoTab(lado));
+  preencherListaAgrupada(lado, secoesTodas, usaSecoes);
+}
+
+function preencherListaAgrupada(lado, secoesTodas, usaSecoes) {
+  const base = DADOS.filter(d => d.lado === lado && d.secao !== "Padrinhos");
+  let html = "";
+  let totalVisivel = 0;
+
+  if (usaSecoes) {
+    const secoesVisiveis = secoesTodas.filter(s => filtroSecao === "Todas" || filtroSecao === s);
+    secoesVisiveis.forEach(sec => {
+      const nesta = base.filter(d => d.secao === sec && passaFiltrosBase(d));
+      if (nesta.length === 0) return;
+      totalVisivel += nesta.length;
+      const pesoSub = nesta.reduce((s, d) => s + pesoDe(d.status), 0);
+      html += `<div class="secao-header"><span>${escapeHtml(sec)}</span><span>${nesta.length} pessoa(s) &middot; esperado ${pesoSub.toFixed(1)}</span></div>`;
+      html += HEADER_COMPLETO;
+      nesta.sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")).forEach(r => { html += renderRowCompleto(r); });
+    });
+  } else {
+    const nesta = base.filter(d => passaFiltrosBase(d));
+    totalVisivel = nesta.length;
+    const pesoSub = nesta.reduce((s, d) => s + pesoDe(d.status), 0);
+    html += `<div class="secao-header"><span>${lado}</span><span>${nesta.length} pessoa(s) &middot; esperado ${pesoSub.toFixed(1)}</span></div>`;
+    html += HEADER_COMPLETO;
+    nesta.sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")).forEach(r => { html += renderRowCompleto(r); });
+  }
+
+  document.getElementById("lista-agrupada").innerHTML = html;
+  document.getElementById("contador").textContent = `Mostrando ${totalVisivel} pessoa(s) com os filtros atuais.`;
+}
+
+// ---------------------------------------------------------------------
+// PADRINHOS (agrupado por Lado)
+// ---------------------------------------------------------------------
+function renderPadrinhosTab() {
+  let html = renderFiltrosPadrao({ mostrarLado: true });
+  html += '<div class="panel"><h2>Padrinhos e madrinhas</h2><div id="lista-padrinhos"></div></div>';
+  document.getElementById("conteudo").innerHTML = html;
+  ligarFiltrosPadrao(renderPadrinhosTab);
+  const base = DADOS.filter(d => d.secao === "Padrinhos");
+  const lados = filtroLado === "Todos" ? ["Gui", "Preta"] : [filtroLado];
+  let out = "";
+  let totalVisivel = 0;
+  lados.forEach(lado => {
+    const nesta = base.filter(d => d.lado === lado && passaFiltrosBase(d));
+    if (nesta.length === 0 && lado !== "Preta") return;
+    totalVisivel += nesta.length;
+    const pesoSub = nesta.reduce((s, d) => s + pesoDe(d.status), 0);
+    out += `<div class="secao-header"><span>Padrinhos - ${lado}</span><span>${nesta.length} pessoa(s) &middot; esperado ${pesoSub.toFixed(1)}</span></div>`;
+    if (nesta.length > 0) {
+      out += HEADER_COMPLETO;
+      nesta.sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")).forEach(r => { out += renderRowCompleto(r); });
+    } else {
+      out += `<div class="contador">Ainda sem padrinhos cadastrados deste lado.</div>`;
+    }
+  });
+  document.getElementById("lista-padrinhos").innerHTML = out;
+  document.getElementById("contador").textContent = `Mostrando ${totalVisivel} pessoa(s) com os filtros atuais.`;
+}
+
+// ---------------------------------------------------------------------
+// CONVITE FISICO / VIRTUAL
+// ---------------------------------------------------------------------
+function renderConviteTab(tipo) {
+  const ehFisico = tipo === "fisico";
+  const secoesTodas = Array.from(new Set(DADOS.map(d => d.secao))).sort((a, b) => a.localeCompare(b, "pt-BR"));
+
+  let html = renderFiltrosPadrao({ mostrarLado: true, secoes: secoesTodas, mostrarEnvio: true });
+  html += `<div class="panel"><h2>Convite ${ehFisico ? "Físico" : "Virtual"}</h2><div class="table-wrap"><div id="lista-convite"></div></div></div>`;
+  document.getElementById("conteudo").innerHTML = html;
+  ligarFiltrosPadrao(() => renderConviteTab(tipo));
+
+  function passaEnvio(r) {
+    if (filtroEnvio === "Todos") return true;
+    if (ehFisico) {
+      const convite = r.convite_fisico, status = r.status_fisico;
+      if (filtroEnvio === "Pendente") return convite === "Sim" && status !== "Enviado";
+      if (filtroEnvio === "Enviado") return convite === "Sim" && status === "Enviado";
+      if (filtroEnvio === "Nao") return convite === "Não";
+      if (filtroEnvio === "Indefinido") return !convite;
+      return true;
+    } else {
+      const status = r.status_virtual;
+      if (filtroEnvio === "Pendente") return status === "Pendente";
+      if (filtroEnvio === "Enviado") return status === "Enviado";
+      if (filtroEnvio === "Indefinido") return !status;
+      return true;
+    }
+  }
+
+  const visiveis = DADOS.filter(d =>
+    passaFiltrosBase(d) &&
+    (filtroLado === "Todos" || d.lado === filtroLado) &&
+    (filtroSecao === "Todas" || d.secao === filtroSecao) &&
+    passaEnvio(d)
+  ).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+
+  let out;
+  if (ehFisico) {
+    out = `<div class="row-grid row-conv row-header">
+      <div class="cell">Nome</div><div class="cell">Lado</div><div class="cell">Seção</div>
+      <div class="cell">Convite físico</div><div class="cell">Status</div><div class="cell"></div>
+    </div>`;
+    visiveis.forEach(r => {
+      out += `<div class="row-grid row-conv" data-row-id="${r.id}">
+        <div class="cell nome">${escapeHtml(r.nome)}</div>
+        <div class="cell">${r.lado}</div>
+        <div class="cell">${escapeHtml(r.secao)}</div>
+        <div class="cell">${selectHTML(r.id, "convite_fisico", r.convite_fisico, SIMNAO, "", "(a definir)")}</div>
+        <div class="cell">${r.convite_fisico === "Sim" ? selectHTML(r.id, "status_fisico", r.status_fisico, ENVIO, "", "(a definir)") : '<span class="muted">-</span>'}</div>
+        <div class="cell"><button class="btn-remove" data-remove-id="${r.id}">&times;</button></div>
+      </div>`;
+    });
+  } else {
+    out = `<div class="row-grid row-conv row-header">
+      <div class="cell">Nome</div><div class="cell">Lado</div><div class="cell">Seção</div>
+      <div class="cell">Status virtual</div><div class="cell"></div><div class="cell"></div>
+    </div>`;
+    visiveis.forEach(r => {
+      out += `<div class="row-grid row-conv" data-row-id="${r.id}">
+        <div class="cell nome">${escapeHtml(r.nome)}</div>
+        <div class="cell">${r.lado}</div>
+        <div class="cell">${escapeHtml(r.secao)}</div>
+        <div class="cell">${selectHTML(r.id, "status_virtual", r.status_virtual, ENVIO, "", "(a definir)")}</div>
+        <div class="cell"></div>
+        <div class="cell"><button class="btn-remove" data-remove-id="${r.id}">&times;</button></div>
+      </div>`;
+    });
+  }
+  document.getElementById("lista-convite").innerHTML = out;
+  document.getElementById("contador").textContent = `Mostrando ${visiveis.length} pessoa(s) com os filtros atuais.`;
+}
+
+// ---------------------------------------------------------------------
+// CRIANÇAS
+// ---------------------------------------------------------------------
+function renderCriancasTab() {
+  const secoesTodas = Array.from(new Set(DADOS.map(d => d.secao))).sort((a, b) => a.localeCompare(b, "pt-BR"));
+  let html = renderFiltrosPadrao({ mostrarLado: true, secoes: secoesTodas });
+  html += `<div class="panel"><h2>Crianças</h2><div class="table-wrap"><div id="lista-criancas"></div></div></div>`;
+  document.getElementById("conteudo").innerHTML = html;
+  ligarFiltrosPadrao(renderCriancasTab);
+
+  const visiveis = DADOS.filter(d =>
+    passaFiltrosBase(d) &&
+    (filtroLado === "Todos" || d.lado === filtroLado) &&
+    (filtroSecao === "Todas" || d.secao === filtroSecao)
+  ).sort((a, b) => criancasDe(b) - criancasDe(a) || a.nome.localeCompare(b.nome, "pt-BR"));
+
+  const totalCriancas = visiveis.reduce((s, d) => s + criancasDe(d), 0);
+
+  let out = `<div class="row-grid row-crianca row-header">
+    <div class="cell">Nome</div><div class="cell">Lado</div><div class="cell">Seção</div>
+    <div class="cell">Tem crianças</div><div class="cell">0-12 meses</div><div class="cell">1 a 7 anos</div><div class="cell"></div>
+  </div>`;
+  visiveis.forEach(r => {
+    out += `<div class="row-grid row-crianca" data-row-id="${r.id}">
+      <div class="cell nome">${escapeHtml(r.nome)}</div>
+      <div class="cell">${r.lado}</div>
+      <div class="cell">${escapeHtml(r.secao)}</div>
+      <div class="cell">${selectHTML(r.id, "tem_criancas", r.tem_criancas, SIMNAO, "", "(a definir)")}</div>
+      <div class="cell">${r.tem_criancas === "Sim" ? selectHTML(r.id, "criancas_bebes", r.criancas_bebes, FAIXA_CRIANCAS_OPCOES, "", "0") : '<span class="muted">-</span>'}</div>
+      <div class="cell">${r.tem_criancas === "Sim" ? selectHTML(r.id, "criancas_1a7", r.criancas_1a7, FAIXA_CRIANCAS_OPCOES, "", "0") : '<span class="muted">-</span>'}</div>
+      <div class="cell"></div>
+    </div>`;
+  });
+  document.getElementById("lista-criancas").innerHTML = out;
+  document.getElementById("contador").textContent = `Mostrando ${visiveis.length} pessoa(s) · total de crianças nesta visão: ${totalCriancas}.`;
+}
+
+// ---------------------------------------------------------------------
+// LISTA SIMPLES (somente leitura)
+// ---------------------------------------------------------------------
+function renderListaSimples() {
+  const secoesTodas = Array.from(new Set(DADOS.map(d => d.secao))).sort((a, b) => a.localeCompare(b, "pt-BR"));
+  let html = renderFiltrosPadrao({ mostrarLado: true, secoes: secoesTodas });
+  html += `<div class="panel"><h2>Todos os convidados</h2><div class="table-wrap"><table class="simples">
+    <thead><tr><th>Nome</th><th>Lado</th><th>Seção</th><th>Status</th></tr></thead>
+    <tbody id="tbody-simples"></tbody></table></div></div>`;
+  document.getElementById("conteudo").innerHTML = html;
+  ligarFiltrosPadrao(renderListaSimples);
+
+  const visiveis = DADOS.filter(d =>
+    passaFiltrosBase(d) &&
+    (filtroLado === "Todos" || d.lado === filtroLado) &&
+    (filtroSecao === "Todas" || d.secao === filtroSecao)
+  ).sort((a, b) => a.secao.localeCompare(b.secao, "pt-BR") || a.nome.localeCompare(b.nome, "pt-BR"));
+
+  const tbody = document.getElementById("tbody-simples");
+  tbody.innerHTML = visiveis.map(d => {
+    const badgeClass = d.status ? slug(d.status) : "vazio";
+    return `<tr><td>${escapeHtml(d.nome)}</td><td>${d.lado}</td><td>${escapeHtml(d.secao)}</td><td><span class="badge ${badgeClass}">${d.status || "(sem status)"}</span></td></tr>`;
+  }).join("");
+  document.getElementById("contador").textContent = `Mostrando ${visiveis.length} pessoa(s) com os filtros atuais.`;
+}
+
+// ---------------------------------------------------------------------
+// NAV / EVENTOS GLOBAIS
+// ---------------------------------------------------------------------
+function renderTabs() {
+  document.getElementById("tabs").innerHTML = TABS.map(t =>
+    `<button data-tab="${t.id}" class="${abaAtual === t.id ? 'active' : ''}">${t.label}</button>`
+  ).join("");
+  document.querySelectorAll("#tabs button").forEach(b => {
+    b.onclick = () => { abaAtual = b.dataset.tab; filtroSecao = "Todas"; filtroLado = "Todos"; filtroEnvio = "Todos"; renderAtual(); };
+  });
+}
+
+function renderAtual() {
+  renderTabs();
+  if (abaAtual === "resumo") renderResumo();
+  else if (abaAtual === "gui") renderLadoTab("Gui");
+  else if (abaAtual === "preta") renderLadoTab("Preta");
+  else if (abaAtual === "padrinhos") renderPadrinhosTab();
+  else if (abaAtual === "criancas") renderCriancasTab();
+  else if (abaAtual === "convite-fisico") renderConviteTab("fisico");
+  else if (abaAtual === "convite-virtual") renderConviteTab("virtual");
+  else if (abaAtual === "lista") renderListaSimples();
+}
+
+function aplicarEdicaoCampo(id, field, valorBruto) {
+  const rec = DADOS.find(d => d.id === id);
+  if (!rec) return;
+  if (field === "nome") {
+    rec.nome = valorBruto.trim() || rec.nome;
+    return;
+  }
+  rec[field] = valorBruto;
+  if (field === "convite_fisico" && valorBruto !== "Sim") rec.status_fisico = "";
+  if (field === "tem_criancas" && valorBruto !== "Sim") { rec.criancas_bebes = ""; rec.criancas_1a7 = ""; }
+}
+
+document.addEventListener("change", (e) => {
+  if (e.target.matches("select[data-field], input[data-field]")) {
+    const id = e.target.dataset.id, field = e.target.dataset.field;
+    aplicarEdicaoCampo(id, field, e.target.value);
+    renderAtual();
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches("button[data-remove-id]")) {
+    const id = e.target.dataset.removeId;
+    const rec = DADOS.find(d => d.id === id);
+    if (rec && confirm(`Remover ${rec.nome} da lista?`)) {
+      DADOS = DADOS.filter(d => d.id !== id);
+      renderAtual();
+    }
+  }
+  if (e.target.matches("button[data-toggle-convite]")) {
+    const id = e.target.dataset.toggleConvite;
+    if (linhasExpandidas.has(id)) linhasExpandidas.delete(id); else linhasExpandidas.add(id);
+    renderAtual();
+  }
+});
+
+document.getElementById("mostrar-nao-ira").addEventListener("change", (e) => {
+  mostrarNaoIra = e.target.checked; renderAtual();
+});
+document.getElementById("busca").addEventListener("input", (e) => {
+  buscaTexto = e.target.value; renderAtual();
+});
+
+document.getElementById("btn-exportar").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(DADOS, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const agora = new Date().toISOString().slice(0, 10);
+  a.href = url; a.download = `lista_casamento_${agora}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("btn-importar-trigger").addEventListener("click", () => {
+  document.getElementById("input-importar").click();
+});
+document.getElementById("input-importar").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    try {
+      const novo = JSON.parse(evt.target.result);
+      if (!Array.isArray(novo)) throw new Error("formato inválido");
+      DADOS = novo;
+      proximoId = DADOS.length + 1;
+      abaAtual = "resumo";
+      renderAtual();
+      alert("Dados importados com sucesso.");
+    } catch (err) {
+      alert("Não consegui ler esse arquivo. Confirme que é um .json exportado por este mesmo app.");
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
+});
+
+// ---------------------------------------------------------------------
+// MODAL "ADICIONAR CONVIDADO"
+// ---------------------------------------------------------------------
+let modalLado = "Gui";
+let modalTipo = "Convidado";
+
+function renderModalPills() {
+  document.getElementById("modal-lado-pills").innerHTML = ["Gui", "Preta"].map(l =>
+    `<div class="pill ${modalLado === l ? 'active' : ''}" data-modal-lado="${l}">${l}</div>`
+  ).join("");
+  document.getElementById("modal-tipo-pills").innerHTML = ["Convidado", "Padrinho"].map(t =>
+    `<div class="pill ${modalTipo === t ? 'active' : ''}" data-modal-tipo="${t}">${t}</div>`
+  ).join("");
+  document.querySelectorAll("[data-modal-lado]").forEach(p => {
+    p.onclick = () => { modalLado = p.dataset.modalLado; renderModalPills(); atualizarModalSecao(); };
+  });
+  document.querySelectorAll("[data-modal-tipo]").forEach(p => {
+    p.onclick = () => { modalTipo = p.dataset.modalTipo; renderModalPills(); atualizarModalSecao(); };
+  });
+}
+
+function atualizarModalSecao() {
+  const wrap = document.getElementById("modal-secao-wrap");
+  const mostraSecao = modalLado === "Gui" && modalTipo === "Convidado";
+  wrap.style.display = mostraSecao ? "block" : "none";
+  if (!mostraSecao) return;
+  const sel = document.getElementById("modal-secao");
+  const secoes = secoesDoLado("Gui");
+  sel.innerHTML = secoes.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("")
+    + `<option value="__outra__">Outra (nova seção)</option>`;
+  const novaWrap = document.getElementById("modal-nova-secao-wrap");
+  novaWrap.style.display = "none";
+  sel.onchange = () => { novaWrap.style.display = sel.value === "__outra__" ? "block" : "none"; };
+}
+
+function abrirModalAdicionar() {
+  document.getElementById("modal-nome").value = "";
+  modalLado = "Gui";
+  modalTipo = "Convidado";
+  renderModalPills();
+  atualizarModalSecao();
+  document.getElementById("modal-adicionar").classList.add("aberto");
+  document.getElementById("modal-nome").focus();
+}
+
+function fecharModalAdicionar() {
+  document.getElementById("modal-adicionar").classList.remove("aberto");
+}
+
+document.getElementById("btn-abrir-modal-adicionar").addEventListener("click", abrirModalAdicionar);
+document.getElementById("btn-cancelar-adicionar").addEventListener("click", fecharModalAdicionar);
+document.getElementById("modal-adicionar").addEventListener("click", (e) => {
+  if (e.target.id === "modal-adicionar") fecharModalAdicionar();
+});
+
+document.getElementById("btn-confirmar-adicionar").addEventListener("click", () => {
+  const nome = document.getElementById("modal-nome").value.trim();
+  if (!nome) { alert("Digite o nome da pessoa."); return; }
+
+  let secao = modalTipo === "Padrinho" ? "Padrinhos" : "";
+  if (modalTipo === "Convidado" && modalLado === "Gui") {
+    const sel = document.getElementById("modal-secao");
+    secao = sel.value === "__outra__"
+      ? (document.getElementById("modal-nova-secao").value.trim() || "Outros")
+      : sel.value;
+  }
+
+  DADOS.push({
+    id: "novo" + (proximoId++), nome, lado: modalLado, secao,
+    status: "Talvez", convite_fisico: "", status_fisico: "", status_virtual: "",
+    tem_criancas: "", criancas_bebes: "", criancas_1a7: "", nota: "", encontro_padrinhos: "",
+  });
+
+  fecharModalAdicionar();
+  abaAtual = modalTipo === "Padrinho" ? "padrinhos" : (modalLado === "Gui" ? "gui" : "preta");
+  renderAtual();
+});
+
+renderAtual();
+</script>
+</body>
+</html>
